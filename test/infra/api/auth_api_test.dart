@@ -28,5 +28,16 @@ void main() {
       // assert
       expect(result, isA<ErrorResult>());
     });
+
+    test('should return error when status code is  200 but malformed json',
+        () async {
+      // arrange
+      when(client.post(any, body: anyNamed('body')))
+          .thenAnswer((_) async => http.Response('{}', 200));
+      // act
+      var result = await sut.signIn(credential);
+      // assert
+      expect(result, isA<ErrorResult>());
+    });
   });
 }
