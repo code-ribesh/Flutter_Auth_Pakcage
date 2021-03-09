@@ -1,7 +1,7 @@
 import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
 import '../../domain/credential.dart';
-import '../api/auth_api.dart';
+import '../api/auth_api_contract.dart';
 import '../../domain/signup_service_contract.dart';
 import '../../domain/auth_service_contract.dart';
 import '../../domain/token.dart';
@@ -21,7 +21,7 @@ class EmailAuth implements IAuthService, ISignUpService {
     assert(_credential != null);
     var result = await _api.signIn(_credential);
     if (result.isError) return result.asError;
-    return Result.value(Token(result.asValue.value.toString()));
+    return Result.value(Token(result.asValue.value));
   }
 
   @override
@@ -37,6 +37,6 @@ class EmailAuth implements IAuthService, ISignUpService {
         type: AuthType.email, email: email, name: name, password: password);
     var result = await _api.signUp(credential);
     if (result.isError) return result.asError;
-    return Result.value(Token(result.asValue.value.toString()));
+    return Result.value(Token(result.asValue.value));
   }
 }
