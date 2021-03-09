@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auth/src/domain/credential.dart';
 import 'package:auth/src/infra/api/auth_api.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,6 +40,17 @@ void main() {
       var result = await sut.signIn(credential);
       // assert
       expect(result, isA<ErrorResult>());
+    });
+
+    test('should return token string when successful ', () async {
+      // arrange
+      var tokenStr = 'jadjabdadlad...';
+      when(client.post(any, body: anyNamed('body'))).thenAnswer(
+          (_) async => http.Response(jsonEncode({'token': tokenStr}), 200));
+      // act
+      var result = await sut.signIn(credential);
+      // assert
+      expect(result.asValue.value, tokenStr);
     });
   });
 }
