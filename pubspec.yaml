@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: any
+  test: any
 
 dev_dependencies:
   flutter_test:
